@@ -191,6 +191,8 @@ function inicializarCatalogo() {
             grid.appendChild(tarjeta);
         });
         tarjetas = [...grid.querySelectorAll('.catalogo-producto-card')];
+        ajustarRangoPrecios();
+        paginaActual = 1;
         renderizar();
     }
 
@@ -207,6 +209,25 @@ function inicializarCatalogo() {
     const minimoTexto = document.querySelector('#precio-minimo-valor');
     const maximoTexto = document.querySelector('#precio-maximo-valor');
     let paginaActual = 1;
+
+    // ajusta el rango para incluir todos los libros, también los agregados desde admin
+    function ajustarRangoPrecios() {
+        const precios = tarjetas
+            .map((tarjeta) => Number(tarjeta.dataset.precio))
+            .filter((precio) => Number.isFinite(precio));
+        if (!precios.length) return;
+
+        const paso = Number(minimo.step) || 1000;
+        const limiteMinimo = Math.max(0, Math.floor(Math.min(...precios) / paso) * paso);
+        const limiteMaximo = Math.max(limiteMinimo + paso, Math.ceil(Math.max(...precios) / paso) * paso);
+        minimo.min = String(limiteMinimo);
+        minimo.max = String(limiteMaximo);
+        maximo.min = String(limiteMinimo);
+        maximo.max = String(limiteMaximo);
+        minimo.value = String(limiteMinimo);
+        maximo.value = String(limiteMaximo);
+        actualizarTextoPrecio();
+    }
 
     // filtra libros por titulo, autor y precio
     function obtenerFiltradas() {
@@ -308,7 +329,7 @@ function inicializarCatalogo() {
     };
     window.addEventListener('storage', sincronizarProductosGuardados);
 
-    actualizarTextoPrecio();
+    ajustarRangoPrecios();
     renderizar();
 }
 
