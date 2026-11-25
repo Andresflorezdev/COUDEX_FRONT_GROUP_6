@@ -13,6 +13,7 @@
   import { initFormContacto, initNavCollapseOnClick } from './eventos.js';
   import { initCatalogo } from './catalogo.js';
   import { initInicio } from './inicio.js';
+  import { inicializarAuth } from './auth.js';
   import { mostrarModal,
     actualizarVistaCarrito,initCarrito} from './carrito.js';
 
@@ -62,6 +63,7 @@
 
   /** Inicializa los eventos de la vista que acaba de insertarse en #main. */
   function initPageFeatures() {
+    inicializarAuth(navigateTo);
     initFormContacto();
     initCatalogo();
     initInicio();
