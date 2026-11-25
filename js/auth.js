@@ -89,7 +89,8 @@ export function iniciarSesion(correo, contrasena) {
         id: usuario.id,
         nombre: usuario.nombre,
         apellido: usuario.apellido,
-        correo: usuario.correo
+        correo: usuario.correo,
+        celular: usuario.celular
     };
 
     try {
@@ -145,16 +146,92 @@ export function actualizarNavegacionAuth() {
     }
 }
 
-function mostrarMensaje(formulario, mensaje, tipo = 'danger') {
-    let aviso = formulario.querySelector('[data-auth-aviso]');
-    if (!aviso) {
-        aviso = document.createElement('div');
-        aviso.dataset.authAviso = 'true';
-        aviso.setAttribute('role', 'alert');
-        formulario.prepend(aviso);
+function mostrarModalMensaje(titulo, mensaje, tipo = 'info', alCerrar) {
+    const modalElemento = document.querySelector('#modal-auth-mensaje');
+    const tituloElemento = document.querySelector('#modal-auth-titulo');
+    const mensajeElemento = document.querySelector('#modal-auth-mensaje-texto');
+
+    if (!modalElemento || !tituloElemento || !mensajeElemento) {
+        console.error('No se encontró el componente del modal de autenticación.');
+        return;
     }
-    aviso.className = `alert alert-${tipo} py-2`;
-    aviso.textContent = mensaje;
+
+    tituloElemento.textContent = titulo;
+    mensajeElemento.textContent = mensaje;
+    modalElemento.dataset.tipo = tipo;
+
+    if (alCerrar) {
+        modalElemento.addEventListener('hidden.bs.modal', alCerrar, { once: true });
+    }
+
+    bootstrap.Modal.getOrCreateInstance(modalElemento).show();
+}
+
+function mostrarModalPerfil() {
+    const sesion = obtenerSesion();
+    if (!sesion) {
+        return;
+    }
+
+    document.querySelector('#perfil-auth-nombre').textContent = sesion.nombre || '—';
+    document.querySelector('#perfil-auth-apellido').textContent = sesion.apellido || '—';
+    document.querySelector('#perfil-auth-correo').textContent = sesion.correo || '—';
+    document.querySelector('#perfil-auth-celular').textContent = sesion.celular || '—';
+    const modalPerfil = document.querySelector('#modal-auth-perfil');
+    if (modalPerfil) {
+        bootstrap.Modal.getOrCreateInstance(modalPerfil).show();
+    }
+}
+
+function conectarControlesVisibilidad(formulario) {
+    const botones = formulario.querySelectorAll('[data-toggle-password]');
+
+    botones.forEach((boton) => {
+        if (boton.dataset.passwordConectado) {
+            return;
+        }
+        boton.dataset.passwordConectado = 'true';
+
+        boton.addEventListener('click', () => {
+            const campo = boton.previousElementSibling;
+            const icono = boton.querySelector('i');
+
+            if (!campo || campo.tagName !== 'INPUT' || !icono) {
+                return;
+            }
+
+            if (campo.type === 'password') {
+                campo.type = 'text';
+                boton.setAttribute('aria-label', 'Ocultar contraseña');
+                boton.setAttribute('title', 'Ocultar contraseña');
+                boton.setAttribute('aria-pressed', 'true');
+                icono.className = 'bi bi-eye-fill';
+            } else {
+                campo.type = 'password';
+                boton.setAttribute('aria-label', 'Mostrar contraseña');
+                boton.setAttribute('title', 'Mostrar contraseña');
+                boton.setAttribute('aria-pressed', 'false');
+                icono.className = 'bi bi-eye';
+            }
+        });
+    });
+
+    formulario.addEventListener('reset', () => {
+        botones.forEach((boton) => {
+            const campo = boton.previousElementSibling;
+            const icono = boton.querySelector('i');
+
+            if (!campo || !icono) {
+                return;
+            }
+
+            campo.type = 'password';
+            boton.setAttribute('aria-label', 'Mostrar contraseña');
+            boton.setAttribute('title', 'Mostrar contraseña');
+            boton.setAttribute('aria-pressed', 'false');
+            icono.className = 'bi bi-eye';
+        });
+    });
 }
 
 function conectarFormularioRegistro(navegar) {
@@ -167,6 +244,7 @@ function conectarFormularioRegistro(navegar) {
         return;
     }
     formulario.dataset.authConectado = 'true';
+    conectarControlesVisibilidad(formulario);
 
     const campoContrasena = formulario.elements.contrasena;
     const campoConfirmar = formulario.elements.confirmar;
@@ -199,13 +277,17 @@ function conectarFormularioRegistro(navegar) {
         });
 
         if (!resultado.correcto) {
-            mostrarMensaje(formulario, resultado.mensaje);
+            mostrarModalMensaje('No se pudo crear la cuenta', resultado.mensaje, 'error');
             return;
         }
 
         formulario.reset();
-        alert('Cuenta creada. Ahora inicia sesión con tu correo y contraseña.');
-        await navegar('login');
+        mostrarModalMensaje(
+            'Cuenta creada',
+            'Ahora inicia sesión con tu correo y contraseña.',
+            'success',
+            () => navegar('login')
+        );
     });
 }
 
@@ -219,6 +301,7 @@ function conectarFormularioLogin(navegar) {
         return;
     }
     formulario.dataset.authConectado = 'true';
+    conectarControlesVisibilidad(formulario);
 
     formulario.addEventListener('submit', async (evento) => {
         evento.preventDefault();
@@ -229,13 +312,17 @@ function conectarFormularioLogin(navegar) {
             formulario.elements.contrasena.value
         );
         if (!resultado.correcto) {
-            mostrarMensaje(formulario, resultado.mensaje);
+            mostrarModalMensaje('No se pudo iniciar sesión', resultado.mensaje, 'error');
             return;
         }
 
         actualizarNavegacionAuth();
-        alert(`¡Bienvenido/a, ${resultado.usuario.nombre}!`);
-        await navegar('inicio');
+        mostrarModalMensaje(
+            'Sesión iniciada',
+            `¡Bienvenido/a, ${resultado.usuario.nombre}!`,
+            'success',
+            () => navegar('inicio')
+        );
     });
 }
 
@@ -252,8 +339,7 @@ export function inicializarAuth(navegar) {
             actualizarNavegacionAuth();
         }
         if (evento.target.closest('[data-auth-perfil]')) {
-            const sesion = obtenerSesion();
-            if (sesion) alert(`${sesion.nombre} ${sesion.apellido}\n${sesion.correo}`);
+            mostrarModalPerfil();
         }
     });
 

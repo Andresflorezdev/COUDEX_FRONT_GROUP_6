@@ -102,6 +102,7 @@
     await Promise.all([
       loadFragment('components/nav.html',    'header#navbar'),
       loadFragment('components/footer.html', 'footer#footer'),
+      loadFragment('components/modalesAuth.html', '#modales-auth'),
 
     ]);
 

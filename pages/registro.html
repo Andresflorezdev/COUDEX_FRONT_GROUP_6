@@ -50,12 +50,14 @@
                     <div class="registro-campo">
                         <label for="registro-contrasena">Contraseña</label>
                         <input class="form-control" id="registro-contrasena" name="contrasena" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" minlength="8" pattern="(?=.*[A-Za-z])(?=.*[0-9])(?!.*(?:1234|abcdefg)).{8,}" title="Usa 8 caracteres o más, con letras y números. No uses 1234 o abcdefg." required>
+                        <button class="password-visibility-toggle" type="button" data-toggle-password aria-label="Mostrar contraseña" aria-pressed="false" title="Mostrar contraseña"><i class="bi bi-eye" aria-hidden="true"></i></button>
                         <small class="estado-validacion estado-correcto">Contraseña válida.</small>
                         <small class="estado-validacion estado-error">Usa 8 caracteres o más, con letras y números. No uses 1234 o abcdefg.</small>
                     </div>
                     <div class="registro-campo">
                         <label for="registro-confirmar">Confirmar contraseña</label>
                         <input class="form-control" id="registro-confirmar" name="confirmar" type="password" placeholder="Repita su contraseña" autocomplete="new-password" minlength="8" required>
+                        <button class="password-visibility-toggle" type="button" data-toggle-password aria-label="Mostrar contraseña" aria-pressed="false" title="Mostrar contraseña"><i class="bi bi-eye" aria-hidden="true"></i></button>
                         <small class="estado-ayuda">Debe coincidir con la contraseña anterior.</small>
                     </div>
                 </div>

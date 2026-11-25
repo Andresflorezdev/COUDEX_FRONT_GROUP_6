@@ -57,8 +57,8 @@ export function initFormContacto() {
  */
 export function initNavCollapseOnClick() {
   document.addEventListener('click', (e) => {
-    const link = e.target.closest('#menu .nav-link[data-page]');
-    if (!link) return;
+    const enlaceNavegacion = e.target.closest('#menu [data-page]');
+    if (!enlaceNavegacion) return;
     const collapse = document.querySelector('#menu');
     if (collapse && collapse.classList.contains('show')) {
       const bsCollapse = bootstrap.Collapse.getInstance(collapse);
