@@ -742,7 +742,7 @@ body:has(#main .inicio-hero) #main {
 }
 
 @media (max-width: 600px) {
-    .registro-pagina { padding: 24px 16px; }
+    .registro-pagina { padding: 40px 16px 24px; }
     .registro-contenido { margin-bottom: 28px; }
     .registro-tarjeta { padding: 26px 20px 22px; }
     .registro-marca { right: 28px; }
@@ -752,7 +752,7 @@ body:has(#main .inicio-hero) #main {
 }
 
 @media (max-width: 600px) {
-    .login-pagina { padding: 24px 16px 40px; }
+    .login-pagina { padding: 44px 16px 40px; }
     .login-tarjeta { padding: 30px 20px 26px; }
     .login-marca { right: 28px; }
     .login-tarjeta h1 { font-size: 24px; }

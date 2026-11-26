@@ -1,0 +1,37 @@
+<!-- Modal reutilizable para avisos de registro e inicio de sesión -->
+<div class="modal fade modal-auth" id="modal-auth-mensaje" tabindex="-1" aria-labelledby="modal-auth-titulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modal-auth-titulo">Aviso</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="modal-auth-mensaje-texto"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-auth-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de perfil provisional; más adelante puede convertirse en una vista propia -->
+<div class="modal fade modal-auth" id="modal-auth-perfil" tabindex="-1" aria-labelledby="modal-auth-perfil-titulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-auth-icono" aria-hidden="true"><i class="bi bi-person-circle"></i></span>
+                <h2 class="modal-title fs-5" id="modal-auth-perfil-titulo">Mi perfil</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-auth-perfil-dato"><span>Nombre</span><strong id="perfil-auth-nombre">—</strong></div>
+                <div class="modal-auth-perfil-dato"><span>Apellido</span><strong id="perfil-auth-apellido">—</strong></div>
+                <div class="modal-auth-perfil-dato"><span>Correo electrónico</span><strong id="perfil-auth-correo">—</strong></div>
+                <div class="modal-auth-perfil-dato"><span>Celular</span><strong id="perfil-auth-celular">—</strong></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-auth-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

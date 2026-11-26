@@ -16,7 +16,7 @@
 
                 <div class="login-campo">
                     <label for="login-correo">Correo electrónico</label>
-                    <input class="form-control" id="login-correo" name="correo" type="email" placeholder="Ingrese su correo" autocomplete="email" required>
+                    <input class="form-control" id="login-correo" name="correo" type="email" placeholder="Ingrese su correo" autocomplete="email" pattern="[A-Za-z0-9._%+\x2D]+@[A-Za-z0-9.\x2D]+\.[A-Za-z]{2,}" title="Escribe un correo con un dominio y una extensión válida, por ejemplo nombre@correo.co." required>
                     <small class="estado-validacion estado-correcto">Correo válido.</small>
                     <small class="estado-validacion estado-error">Escribe un correo válido.</small>
                 </div>
@@ -24,6 +24,7 @@
                 <div class="login-campo">
                     <label for="login-contrasena">Contraseña</label>
                     <input class="form-control" id="login-contrasena" name="contrasena" type="password" placeholder="Ingrese su contraseña" autocomplete="current-password" required>
+                    <button class="password-visibility-toggle" type="button" data-toggle-password aria-label="Mostrar contraseña" aria-pressed="false" title="Mostrar contraseña"><i class="bi bi-eye" aria-hidden="true"></i></button>
                 </div>
 
                 <button class="login-boton" type="submit">Iniciar sesión <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
