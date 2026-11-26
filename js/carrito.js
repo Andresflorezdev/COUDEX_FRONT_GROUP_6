@@ -16,18 +16,6 @@
         }
     }
 
-    export function pintarCarrito(pintar = true) {
-
-    const iconos = document.querySelectorAll('.resumen-carrito');
-
-        iconos.forEach(icono => {
-
-            icono.classList.toggle('pintar', pintar);
-            icono.classList.toggle('despintar', !pintar);
-
-        });
-    }
-
     function guardarCarrito() {
         localStorage.setItem(
             CLAVE_CARRITO,
@@ -82,7 +70,6 @@
         }
         guardarCarrito();
 
-        pintarCarrito(true);
 
         actualizarVistaCarrito();
     }
@@ -101,10 +88,6 @@
 
         guardarCarrito();
 
-        if (carrito.length === 0) {
-            pintarCarrito(false);
-        }
-
         actualizarVistaCarrito();
     }
     export function vaciarCarrito() {
@@ -113,7 +96,6 @@
 
         guardarCarrito();
 
-        pintarCarrito(false);
 
         actualizarVistaCarrito();
     }
@@ -157,7 +139,6 @@
 
             lista.appendChild(mensaje);
 
-            pintarCarrito(false);
 
             return;
         }
