@@ -22,9 +22,11 @@ Ratón de Biblioteca es una propuesta de plataforma digital para descubrir y ace
 - **Un catálogo interactivo:** diez libros base con portadas, búsqueda, filtros por categoría, región y precio, paginación y carrusel de más pedidos.
 - **Un panel conectado al catálogo:** permite crear productos, editar y eliminar los libros base del HTML, asignar regiones y ver una vista previa de las portadas.
 - **Una experiencia interactiva:** navegación adaptable, acordeón de preguntas frecuentes y componentes de Bootstrap.
+- **Inicio de sesión de usuarios:** permite crear una cuenta y validar el acceso con correo y contraseña guardados en `localStorage`; al ingresar, el navbar muestra el menú de cuenta.
 - **Una mirada al equipo:** presentación de Coudex y del proyecto integrador de Generation.
 
 > **Alcance de esta entrega:** este repositorio contiene el frontend. El catálogo mantiene diez productos base en su HTML. El panel los carga al abrirse y permite editar o eliminar sus datos mediante ajustes en `localStorage`, sin reescribir el HTML. Los productos nuevos también se guardan en `localStorage`. El panel imprime en consola el JSON combinado, y las imágenes cargadas desde el formulario se guardan como Data URL. La información persiste solo en ese navegador y no se envía a una base de datos.
+La autenticación guarda los usuarios y la sesión como JSON en `ratonBiblioteca_usuarios` y `ratonBiblioteca_sesion` de `localStorage`.
 
 ## 🖥️ Tecnologías
 
@@ -60,6 +62,7 @@ COUDEX_FRONT_GROUP_6/
 │   ├── inicio.js              # Carrusel de testimonios de Inicio
 │   ├── loadContent.js         # fetch + inyección de components/ y pages/ en el DOM
 │   ├── eventos.js             # Formulario de contacto y eventos del sitio
+│   ├── auth.js                # Registro e inicio/cierre de sesión
 │   ├── productosStorage.js    # Productos nuevos y ajustes del catálogo en localStorage
 │   └── admin/
 │       ├── appAdmin.js         # Arranque y navegación del panel
@@ -68,6 +71,7 @@ COUDEX_FRONT_GROUP_6/
 ├── components/
 │   ├── nav.html               # Navbar del sitio
 │   ├── footer.html            # Footer del sitio
+│   ├── modalesAuth.html       # Modales de autenticación y perfil
 │   └── admin/
 │       ├── header.html         # Header del panel
 │       └── sidebar.html        # Navegación lateral del panel
