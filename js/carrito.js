@@ -354,7 +354,15 @@
 
         const botonVaciar = document.getElementById("btn-vaciar");
 
-        botonVaciar.addEventListener("click",()=>{vaciarCarrito()})
+        botonVaciar.addEventListener("click", () => {
+            if (carrito.length === 0) return;
+            
+            const confirmado = confirm("¿Estás seguro de eliminar tu lista de deseos?");
+            
+            if (confirmado) {
+                vaciarCarrito();
+    }
+});
 
         renderizarCarrito();
     }

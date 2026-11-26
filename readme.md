@@ -4,9 +4,9 @@
 
 Ratón de Biblioteca es una propuesta de plataforma digital para descubrir y acercarse a la literatura colombiana. El proyecto busca dar visibilidad a autores nacionales y crear un punto de encuentro entre lectores, librerías independientes y vendedores de libros.
 
-[🌐 Ver demo en GitHub Pages](https://manuelramirez0001.github.io/COUDEX_FRONT_GROUP_6/) · [🗂️ Tablero del proyecto](https://trello.com/invite/b/6ad28a525dfde1bd84766eec/ATTI06130e6fe041b420939a95eed1fbc315E6FB0ECD/coudex-proyecto)
+[🌐 Ver demo en GitHub Pages](https://andresflorezdev.github.io/COUDEX_FRONT_GROUP_6/) · [🗂️ Tablero del proyecto](https://trello.com/invite/b/6ad28a525dfde1bd84766eec/ATTI06130e6fe041b420939a95eed1fbc315E6FB0ECD/coudex-proyecto)
 
-[🛠️ Abrir panel de administración](https://manuelramirez0001.github.io/COUDEX_FRONT_GROUP_6/admin.html?page=panelAdmin)
+[🛠️ Abrir panel de administración](https://andresflorezdev.github.io/COUDEX_FRONT_GROUP_6/admin.html?page=panelAdmin)
 
 ---
 
