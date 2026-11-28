@@ -54,6 +54,19 @@ function normalizarTexto(texto) {
         .toLocaleLowerCase('es');
 }
 
+// adapta categorías antiguas a las seis opciones actuales del formulario
+function normalizarCategoriaAdmin(categoria = '') {
+    const valor = normalizarTexto(categoria);
+
+    if (valor.includes('poesia')) return 'poesia';
+    if (valor.includes('historia') || valor.includes('cronica')) return 'historia';
+    if (valor.includes('infantil') || valor.includes('juvenil')) return 'infantil';
+    if (valor.includes('clasica') || valor.includes('novela')) return 'clasica';
+    if (valor.includes('realismo')) return 'realismo-magico';
+
+    return 'contemporanea';
+}
+
 // prepara el formulario, la tabla, las ediciones y la paginacion de libros
 export async function inicializarFormularioLibros() {
     const tbody = document.querySelector('#tabla-libros');
@@ -250,7 +263,7 @@ export async function inicializarFormularioLibros() {
     function iniciarEdicion(producto) {
         productoEnEdicion = { id: producto.id, origen: producto.origen };
         formulario.elements['nombreLibro'].value = producto.nombre;
-        formulario.elements['categoria'].value = producto.categoria;
+        formulario.elements['categoria'].value = normalizarCategoriaAdmin(producto.categoria);
         campoRegion.value = producto.region || '';
         formulario.elements['descripcion'].value = producto.descripcion;
         formulario.elements['precio'].value = producto.precio;
