@@ -1,4 +1,5 @@
 import { obtenerAjustesCatalogo, obtenerProductosGuardados } from './productosStorage.js';
+import { alternarFavorito, obtenerFavoritos } from './favoritosStorage.js';
 
 // cantidad de libros que se muestran en cada pagina del catalogo
 const LIBROS_POR_PAGINA = 8;
@@ -17,6 +18,23 @@ function normalizarCategoria(categoria = '') {
     if (valor.includes('clasica') || valor.includes('novela')) return 'clasica';
     if (valor.includes('realismo')) return 'realismo-magico';
     return 'contemporanea';
+}
+
+function actualizarBotonFavorito(boton, esFavorito, nombreProducto) {
+    const icono = boton.querySelector('i');
+    boton.classList.toggle('activo', esFavorito);
+    boton.setAttribute('aria-pressed', String(esFavorito));
+    boton.setAttribute(
+        'aria-label',
+        esFavorito
+            ? `Quitar ${nombreProducto} de favoritos`
+            : `Guardar ${nombreProducto} en favoritos`
+    );
+
+    if (icono) {
+        icono.classList.toggle('bi-heart', !esFavorito);
+        icono.classList.toggle('bi-heart-fill', esFavorito);
+    }
 }
 
 // construye la tarjeta de un producto guardado desde el administrador
@@ -126,6 +144,24 @@ function inicializarCatalogo() {
     if (!grid) return;
 
     aplicarAjustesCatalogo(grid);
+
+    grid.addEventListener('click', (evento) => {
+        const boton = evento.target.closest('.catalogo-producto-favorito');
+        if (!boton || !grid.contains(boton)) return;
+
+        const tarjeta = boton.closest('.catalogo-producto-card[data-id]');
+        if (!tarjeta) return;
+
+        const resultado = alternarFavorito({
+            id: tarjeta.dataset.id,
+            nombre: tarjeta.dataset.nombre,
+            autor: tarjeta.dataset.autor,
+            precio: tarjeta.dataset.precio
+        });
+        if (resultado.correcto) {
+            actualizarBotonFavorito(boton, resultado.guardado, tarjeta.dataset.nombre);
+        }
+    });
     // desplaza el carrusel una tarjeta por cada clic en sus flechas
     const carruselMasPedidos = document.querySelector('#carrusel-mas-pedidos');
     document.querySelectorAll('[data-carrusel-direccion]').forEach((boton) => {
@@ -183,6 +219,21 @@ function inicializarCatalogo() {
         grid.appendChild(tarjeta);
     });
 
+    function sincronizarEstadoFavoritos() {
+        const favoritosActuales = obtenerFavoritos();
+        grid.querySelectorAll('.catalogo-producto-card[data-id]').forEach((tarjeta) => {
+            const boton = tarjeta.querySelector('.catalogo-producto-favorito');
+            if (!boton) return;
+            actualizarBotonFavorito(
+                boton,
+                favoritosActuales.some((favorito) => favorito.id === tarjeta.dataset.id),
+                tarjeta.dataset.nombre
+            );
+        });
+    }
+
+    sincronizarEstadoFavoritos();
+
     function actualizarProductosGuardados() {
         grid.querySelectorAll('[data-producto-guardado="true"]').forEach((tarjeta) => tarjeta.remove());
         obtenerProductosGuardados().forEach((producto, indice) => {
@@ -190,6 +241,7 @@ function inicializarCatalogo() {
             tarjeta.dataset.productoGuardado = 'true';
             grid.appendChild(tarjeta);
         });
+        sincronizarEstadoFavoritos();
         tarjetas = [...grid.querySelectorAll('.catalogo-producto-card')];
         ajustarRangoPrecios();
         paginaActual = 1;
