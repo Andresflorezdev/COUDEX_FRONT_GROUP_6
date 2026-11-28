@@ -146,7 +146,7 @@ export function actualizarNavegacionAuth() {
     }
 }
 
-function mostrarModalMensaje(titulo, mensaje, tipo = 'info', alCerrar) {
+export function mostrarModalMensaje(titulo, mensaje, tipo = 'info', alCerrar) {
     const modalElemento = document.querySelector('#modal-auth-mensaje');
     const tituloElemento = document.querySelector('#modal-auth-titulo');
     const mensajeElemento = document.querySelector('#modal-auth-mensaje-texto');
@@ -167,6 +167,29 @@ function mostrarModalMensaje(titulo, mensaje, tipo = 'info', alCerrar) {
     bootstrap.Modal.getOrCreateInstance(modalElemento).show();
 }
 
+export function mostrarModalRequiereSesion(navegar) {
+    const modalElemento = document.querySelector('#modal-auth-requiere-sesion');
+    const botonLogin = document.querySelector('#modal-auth-ir-login');
+
+    if (!modalElemento || !botonLogin) {
+        console.error('No se encontró el modal que solicita iniciar sesión.');
+        return;
+    }
+
+    botonLogin.onclick = () => {
+        modalElemento.addEventListener('hidden.bs.modal', () => {
+            if (typeof navegar === 'function') {
+                navegar('login');
+            } else {
+                window.location.href = 'index.html?page=login';
+            }
+        }, { once: true });
+
+        bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+    };
+
+    bootstrap.Modal.getOrCreateInstance(modalElemento).show();
+}
 function mostrarModalPerfil() {
     const sesion = obtenerSesion();
     if (!sesion) {

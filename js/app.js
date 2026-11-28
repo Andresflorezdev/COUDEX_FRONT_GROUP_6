@@ -116,6 +116,6 @@
     initNavCollapseOnClick();
     initPageFeatures();
     mostrarModal();
-    initCarrito();
+    initCarrito(navigateTo);
   })();
 
