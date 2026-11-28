@@ -14,6 +14,24 @@
     </div>
 </div>
 
+<!-- Modal que solicita autenticación antes de confirmar una compra -->
+<div class="modal fade modal-auth" id="modal-auth-requiere-sesion" tabindex="-1" aria-labelledby="modal-auth-requiere-sesion-titulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modal-auth-requiere-sesion-titulo">Inicia sesión para comprar</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                Para confirmar tu compra debes iniciar sesión. Tus productos seguirán guardados en el carrito.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ahora no</button>
+                <button type="button" class="btn btn-auth-primary" id="modal-auth-ir-login">Iniciar sesión</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal de perfil provisional; más adelante puede convertirse en una vista propia -->
 <div class="modal fade modal-auth" id="modal-auth-perfil" tabindex="-1" aria-labelledby="modal-auth-perfil-titulo" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
