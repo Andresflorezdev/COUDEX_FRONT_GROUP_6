@@ -18,14 +18,6 @@ import { guardarPedido } from './pedidosStorage.js';
         }
     }
 
-    export function pintarCarrito(pintar = true) {
-    const iconos = document.querySelectorAll('.resumen-carrito');
-        iconos.forEach(icono => {
-            icono.classList.toggle('pintar', pintar);
-            icono.classList.toggle('despintar', !pintar);
-        });
-    }
-
     function guardarCarrito() {
         localStorage.setItem(
             CLAVE_CARRITO,
@@ -67,7 +59,6 @@ import { guardarPedido } from './pedidosStorage.js';
             });
         }
         guardarCarrito();
-        pintarCarrito(true);
         actualizarVistaCarrito();
     }
 
@@ -83,15 +74,11 @@ import { guardarPedido } from './pedidosStorage.js';
         );
 
         guardarCarrito();
-        if (carrito.length === 0) {
-            pintarCarrito(false);
-        }
         actualizarVistaCarrito();
     }
     export function vaciarCarrito() {
         carrito = [];
         guardarCarrito();
-        pintarCarrito(false);
         actualizarVistaCarrito();
     }
 
@@ -118,7 +105,6 @@ import { guardarPedido } from './pedidosStorage.js';
             mensaje.textContent = 'Tu carrito está vacío.';
             mensaje.className = 'text-center text-muted py-4';
             lista.appendChild(mensaje);
-            pintarCarrito(false);
             return;
         }
         carrito.forEach(producto => {
